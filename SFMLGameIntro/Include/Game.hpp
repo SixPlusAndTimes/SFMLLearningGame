@@ -1,4 +1,5 @@
 #include<SFML/Graphics.hpp>
+#include<World.hpp>
 #ifndef GAME_H
 #define GAME_H
 class Game {
@@ -14,19 +15,12 @@ class Game {
     private: 
         static const float PlayerSpeed;
         static const sf::Time  TimePerFrame;
-        sf::RenderWindow mWindow;
-        sf::Texture mTexture;
-        sf::Sprite  mPlayer;
-        
+        sf::RenderWindow    mWindow;
+        World               mWorld;
         sf::Font				mFont;
 		sf::Text				mStatisticsText;
 		sf::Time				mStatisticsUpdateTime;
 		std::size_t				mStatisticsNumFrames;
-
-		bool mIsMovingUp;
-		bool mIsMovingDown;
-		bool mIsMovingLeft;
-		bool mIsMovingRight;
 };
 
 

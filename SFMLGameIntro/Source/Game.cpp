@@ -6,22 +6,12 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 
 Game::Game()
 : mWindow(sf::VideoMode(640, 480), "SFML Application", sf::Style::Close)
-, mTexture()
-, mPlayer() 
+, mWorld(mWindow)
 , mFont()
 , mStatisticsText()
 , mStatisticsUpdateTime()
 , mStatisticsNumFrames(0)
-, mIsMovingUp(false)
-, mIsMovingDown(false)
-, mIsMovingLeft(false)
-, mIsMovingRight(false)
 {
-	if (!mTexture.loadFromFile("Media/Texture/Eagle.png")) {
-		printf("load texture failed\n");
-	}
-	mPlayer.setTexture(mTexture);
-	mPlayer.setPosition(100.f, 100.f);
 
 	if (!mFont.loadFromFile("Media/Sansation.ttf")) {
 		printf("load font failed\n");
@@ -100,34 +90,24 @@ void Game::updateStatistics(sf::Time elapsedTime)
 
 void Game::update(sf::Time deltaTime) 
 {
-	sf::Vector2f movement(0.f, 0.f);
-	if (mIsMovingUp)
-		movement.y -= 1.f * PlayerSpeed;
-	if (mIsMovingDown)
-		movement.y += 1.f * PlayerSpeed;
-	if (mIsMovingLeft)
-		movement.x -= 1.f * PlayerSpeed;
-	if (mIsMovingRight)
-		movement.x += 1.f * PlayerSpeed;
-	
-	// printf("update movement.x[%f] movement.y[%f], deltaTime.asSeconds()[%f]\n", movement.x, movement.y, deltaTime.asSeconds());
-	mPlayer.move(movement * deltaTime.asSeconds());
+	mWorld.update(deltaTime);
 }
 void Game::render()
 {
 	mWindow.clear();
-	mWindow.draw(mPlayer);
+	mWorld.draw();
+
 	mWindow.draw(mStatisticsText);
 	mWindow.display();
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-	if (key == sf::Keyboard::W)
-		mIsMovingUp = isPressed;
-	else if (key == sf::Keyboard::S)
-		mIsMovingDown = isPressed;
-	else if (key == sf::Keyboard::A)
-		mIsMovingLeft = isPressed;
-	else if (key == sf::Keyboard::D)
-		mIsMovingRight = isPressed;
+	// if (key == sf::Keyboard::W)
+	// 	mIsMovingUp = isPressed;
+	// else if (key == sf::Keyboard::S)
+	// 	mIsMovingDown = isPressed;
+	// else if (key == sf::Keyboard::A)
+	// 	mIsMovingLeft = isPressed;
+	// else if (key == sf::Keyboard::D)
+	// 	mIsMovingRight = isPressed;
 }

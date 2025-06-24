@@ -137,17 +137,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\Aircraft.hpp" />
+    <ClInclude Include="Include\Entity.hpp" />
     <ClInclude Include="Include\Game.hpp" />
+    <ClInclude Include="Include\ResourceHolder.hpp" />
+    <ClInclude Include="Include\ResourceIdentifier.hpp" />
+    <ClInclude Include="Include\SceneNode.hpp" />
+    <ClInclude Include="Include\SpriteNode.hpp" />
     <ClInclude Include="Include\StringHelpers.hpp" />
+    <ClInclude Include="Include\utils.hpp" />
+    <ClInclude Include="Include\World.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Aircraft.cpp" />
+    <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\SceneNode.cpp" />
+    <ClCompile Include="Source\SpriteNode.cpp" />
+    <ClCompile Include="Source\World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Media\Texture\Eagle.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Include\ResourceHolder.inl" />
     <None Include="Include\StringHelpers.inl" />
   </ItemGroup>
   <ItemGroup>
