@@ -17,6 +17,7 @@ class Aircraft : public Entity
     private:
         Type        mType;
         sf::Sprite  mSprite;
+        virtual Category::Type  getCategory() const override;
 };
 
 

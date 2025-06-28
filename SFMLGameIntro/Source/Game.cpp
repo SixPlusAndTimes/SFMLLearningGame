@@ -7,6 +7,7 @@ const sf::Time Game::TimePerFrame = sf::seconds(1.f/60.f);
 Game::Game()
 : mWindow(sf::VideoMode(640, 480), "SFML Application", sf::Style::Close)
 , mWorld(mWindow)
+, mPlayer()
 , mFont()
 , mStatisticsText()
 , mStatisticsUpdateTime()
@@ -33,7 +34,7 @@ void Game::run()
 		{
 			timeSinceLastUpdate -= TimePerFrame;
 
-			processEvents();
+			processInput();
 			update(TimePerFrame);
 		}
 
@@ -42,35 +43,6 @@ void Game::run()
 	}
 }
 
-void Game::processEvents() 
-{
-	sf::Event event;
-	while (mWindow.pollEvent(event))
-	{
-		switch (event.type)
-		{
-			case sf::Event::KeyPressed: 
-			{
-				printf("KeyBoard[%d] pressd\n", event.key.code);
-				handlePlayerInput(event.key.code, true);
-				break;
-			}
-			case sf::Event::KeyReleased: 
-			{
-				printf("KeyBoard[%d] released\n", event.key.code);
-				handlePlayerInput(event.key.code, false);
-				break;
-			}
-			case sf::Event::Closed: 
-			{
-				mWindow.close();
-				break;
-			}
-			default:
-				break;
-		}
-	}
-}
 
 void Game::updateStatistics(sf::Time elapsedTime)
 {
@@ -101,13 +73,19 @@ void Game::render()
 	mWindow.display();
 }
 
-void Game::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
-	// if (key == sf::Keyboard::W)
-	// 	mIsMovingUp = isPressed;
-	// else if (key == sf::Keyboard::S)
-	// 	mIsMovingDown = isPressed;
-	// else if (key == sf::Keyboard::A)
-	// 	mIsMovingLeft = isPressed;
-	// else if (key == sf::Keyboard::D)
-	// 	mIsMovingRight = isPressed;
+
+void Game::processInput()
+{
+	CommandQueue& commandQueue = mWorld.getCommandQueue();
+	sf::Event event;
+	while (mWindow.pollEvent(event))
+	{
+		mPlayer.handleEvent(event, commandQueue);
+
+		if (event.type == sf::Event::Closed)
+		{
+			mWindow.close();
+		}
+		mPlayer.handleRealtimeInput(commandQueue);
+	}
 }

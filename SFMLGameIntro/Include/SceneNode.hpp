@@ -3,6 +3,8 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include <Category.hpp>
+#include <Command.hpp>
 class SceneNode : public sf::Transformable, public sf::Drawable, private sf::NonCopyable
 {
     public:
@@ -14,6 +16,8 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
         void    update(sf::Time dt);
         sf::Vector2f    getWorldPosition() const;        
         sf::Transform   getWorldTransform() const;
+        void            onCommand(const Command& command, sf::Time dt); 
+        virtual Category::Type  getCategory() const;
     private:
         // must override the pure virtual func of the drawable
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -22,6 +26,7 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
 
         virtual void updateCurrent(sf::Time dt);
         void         updateChildren(sf::Time dt);
+
     private:
         std::vector<Ptr>    mChildren;
         SceneNode*          mParent; // weak pointer?

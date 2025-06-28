@@ -12,6 +12,7 @@ Textures::ID toTextureId(Aircraft::Type type)
             return  Textures::Invalid;
     }
 }
+
 Aircraft::Aircraft(Type type, const TextureHolder& textures) 
 : mType(type)
 , mSprite(textures.get(toTextureId(type)))
@@ -23,4 +24,15 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures)
 void Aircraft::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
     target.draw(mSprite, states);
+}
+
+Category::Type Aircraft::getCategory() const 
+{
+    switch (mType)
+    {
+        case Eagle:
+            return Category::PlayerAircraft;
+        default:
+            return Category::EnemyAircraft;
+    }
 }

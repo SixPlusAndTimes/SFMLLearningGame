@@ -7,6 +7,7 @@
 #include <ResourceIdentifier.hpp>
 #include <SceneNode.hpp>
 #include <Aircraft.hpp>
+#include <CommandQueue.hpp>
 
 class World : public sf::NonCopyable
 {
@@ -14,11 +15,10 @@ class World : public sf::NonCopyable
         explicit World(sf::RenderWindow& window);
         void update(sf::Time dt);
         void draw();
-
+        CommandQueue&    getCommandQueue();
     private:
-        void loadTextures();
-        void buildScene();
-
+        void            loadTextures();
+        void            buildScene();
     private:
         enum 
         {
@@ -36,5 +36,6 @@ class World : public sf::NonCopyable
         sf::Vector2f                        mSpawnPosition;
         float                               mScrollSpeed;
         Aircraft*                           mPlayerAircraft;
+        CommandQueue                        mCommandQueue;
 };
 #endif // WORLD_HBlendNone

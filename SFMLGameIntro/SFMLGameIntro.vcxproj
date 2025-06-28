@@ -81,7 +81,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>F:\Programming\SFML-2.6.2\include;F:\Projects\SFMLRelated\SFMLGameIntro\SFMLGameIntro\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -138,8 +138,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Aircraft.hpp" />
+    <ClInclude Include="Include\Command.hpp" />
+    <ClInclude Include="Include\CommandQueue.hpp" />
     <ClInclude Include="Include\Entity.hpp" />
     <ClInclude Include="Include\Game.hpp" />
+    <ClInclude Include="Include\Player.hpp" />
     <ClInclude Include="Include\ResourceHolder.hpp" />
     <ClInclude Include="Include\ResourceIdentifier.hpp" />
     <ClInclude Include="Include\SceneNode.hpp" />
@@ -150,9 +153,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Aircraft.cpp" />
+    <ClCompile Include="Source\Command.cpp" />
+    <ClCompile Include="Source\CommandQueue.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\Main.cpp" />
+    <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneNode.cpp" />
     <ClCompile Include="Source\SpriteNode.cpp" />
     <ClCompile Include="Source\World.cpp" />

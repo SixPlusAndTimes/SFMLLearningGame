@@ -1,5 +1,8 @@
 #include <World.hpp>
 #include <SpriteNode.hpp>
+#include <iostream>
+#include <format>
+#include <cmath>
 World::World(sf::RenderWindow& window)
 : mWindow(window)
 , mWorldView(window.getDefaultView())
@@ -10,6 +13,7 @@ World::World(sf::RenderWindow& window)
 , mSpawnPosition(mWorldView.getSize().x / 2.f, mWorldBounds.height - mWorldView.getSize().y / 2.f)
 , mScrollSpeed(-50.f)
 , mPlayerAircraft(nullptr)
+, mCommandQueue()
 {
 	loadTextures();
 	buildScene();
@@ -22,16 +26,36 @@ void World::update(sf::Time dt)
 {
     mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());
 
-    sf::Vector2f position = mPlayerAircraft->getPosition();
-    sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+    mPlayerAircraft->setVelocity(0.f, 0.f);
 
-    if (position.x <= mWorldBounds.left + 150
-        || position.x >= mWorldBounds.left + mWorldBounds.width - 150)    
+    // Forward commands to the scene gragh
+    while (!mCommandQueue.isEmpty())
     {
-        velocity.x = -velocity.x;
-        mPlayerAircraft->setVelocity(velocity);
+        mSceneGragh.onCommand(mCommandQueue.pop(), dt);
     }
+
+    // diagonal speed should be devided by sqrt2
+    sf::Vector2f velocity = mPlayerAircraft->getVelocity();
+    if(velocity.x != 0 && velocity.y != 0)
+    {
+        mPlayerAircraft->setVelocity(velocity / std::sqrt(2.0f));
+    }
+    mPlayerAircraft->accelerate(0.f, mScrollSpeed);
+
+    // update scenenodes
     mSceneGragh.update(dt);
+
+    // restrict player position in bounds
+    sf::FloatRect viewBounds{mWorldView.getCenter() - mWorldView.getSize() / 2.0f, mWorldView.getSize()};
+    const float borderDistance = 40.f;
+    sf::Vector2f position = mPlayerAircraft->getPosition();
+    position.x = std::max(position.x,
+        viewBounds.left + borderDistance);
+    position.x = std::min(position.x,
+        viewBounds.left + viewBounds.width - borderDistance);    position.y = std::max(position.y,
+        viewBounds.top + borderDistance);
+    position.y = std::min(position.y,
+        viewBounds.top + viewBounds.height - borderDistance);    mPlayerAircraft->setPosition(position);
 }
 
 void World::draw()
@@ -71,7 +95,7 @@ void World::buildScene()
     std::unique_ptr<Aircraft> leader = std::make_unique<Aircraft>(Aircraft::Eagle, mTextures);
     mPlayerAircraft = leader.get();
     mPlayerAircraft->setPosition(mSpawnPosition);
-    mPlayerAircraft->setVelocity(40.f, mScrollSpeed);
+    mPlayerAircraft->setVelocity(0.f, mScrollSpeed);
     mSceneLayers[Air]->attachChild(std::move(leader));
 
     std::unique_ptr<Aircraft> rightEscort = std::make_unique<Aircraft>(Aircraft::Raptor, mTextures);
@@ -81,4 +105,9 @@ void World::buildScene()
     std::unique_ptr<Aircraft> leftEscort = std::make_unique<Aircraft>(Aircraft::Raptor, mTextures);
     leftEscort->setPosition(-80.f, 50.f);
     mPlayerAircraft->attachChild(std::move(leftEscort));
+}
+
+CommandQueue& World::getCommandQueue()
+{
+    return mCommandQueue;
 }
