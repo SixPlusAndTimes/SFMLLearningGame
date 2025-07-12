@@ -1,15 +1,14 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <Game.hpp>
 #include <ResourceHolder.hpp>
 #include <SceneNode.hpp>
-
+#include "Application.hpp"
 int main()
 {
 	try
 	{
-		Game game;
-		game.run();
+		Application app;
+		app.run();
 	}
 	catch (std::exception& e)
 	{

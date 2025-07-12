@@ -36,7 +36,7 @@ Player::Player()
 void Player::handleEvent(const sf::Event& event, CommandQueue& commandQueue)
 {
     if (event.type == sf::Event::KeyPressed
-        || event.key.code == sf::Keyboard::P)
+        && event.key.code == sf::Keyboard::P)
     {
         Command output;
         output.category = Category::PlayerAircraft;

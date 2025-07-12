@@ -3,6 +3,11 @@
 #include <iostream>
 #include <string>
 #include <source_location>
+namespace sf
+{
+    class Sprite;
+    class Text;
+} // namespace sf
 
 namespace TerminalColor {
     constexpr const char* RESET   = "\033[0m";
@@ -23,30 +28,33 @@ enum class LogLevel {
     ERROR
 };
 
-static LogLevel globalLogLevel = LogLevel::INFO;
-void setLogLevel(LogLevel level);
+//static LogLevel globalLogLevel = LogLevel::INFO;
+//void setLogLevel(LogLevel level);
 
 
-template<typename... Args>
-void Log(const std::string& levelColor,
-         const LogLevel&    curLoglevel,
-         const std::string& levelName,
-         const std::source_location& location,
-         const std::string& format,
-         Args&&... args) {
-    if (curLoglevel < globalLogLevel) return;
-    std::string msg = std::vformat(format, std::make_format_args(args...));
+//template<typename... Args>
+//void Log(const std::string& levelColor,
+//         const LogLevel&    curLoglevel,
+//         const std::string& levelName,
+//         const std::source_location& location,
+//         const std::string& format,
+//         Args&&... args) {
+//    if (curLoglevel < globalLogLevel) return;
+//    std::string msg = std::vformat(format, std::make_format_args(args...));
+//
+//    std::cout << levelColor << "[" << levelName << "]" << TerminalColor::RESET
+//              << " "
+//              << TerminalColor::CYAN << msg << TerminalColor::RESET
+//              << " (" << location.file_name() << ":" << location.line() << ")"
+//              << std::endl;
+//}
 
-    std::cout << levelColor << "[" << levelName << "]" << TerminalColor::RESET
-              << " "
-              << TerminalColor::CYAN << msg << TerminalColor::RESET
-              << " (" << location.file_name() << ":" << location.line() << ")"
-              << std::endl;
-}
+//#define LOG_DEBUG(...)    Log(TerminalColor::CYAN,    LogLevel::DEBUG, "DEBUG",   std::source_location::current(), __VA_ARGS__)
+//#define LOG_INFO(...)     Log(TerminalColor::GREEN,   LogLevel::INFO, "INFO",    std::source_location::current(), __VA_ARGS__)
+//#define LOG_WARN(...)     Log(TerminalColor::YELLOW,  LogLevel::WARN,  "WARNING", std::source_location::current(), __VA_ARGS__)
+//#define LOG_ERROR(...)    Log(TerminalColor::RED,     LogLevel::ERROR,  "ERROR",   std::source_location::current(), __VA_ARGS__)
 
-#define LOG_DEBUG(...)    Log(TerminalColor::CYAN,    LogLevel::DEBUG, "DEBUG",   std::source_location::current(), __VA_ARGS__)
-#define LOG_INFO(...)     Log(TerminalColor::GREEN,   LogLevel::INFO, "INFO",    std::source_location::current(), __VA_ARGS__)
-#define LOG_WARN(...)     Log(TerminalColor::YELLOW,  LogLevel::WARN,  "WARNING", std::source_location::current(), __VA_ARGS__)
-#define LOG_ERROR(...)    Log(TerminalColor::RED,     LogLevel::ERROR,  "ERROR",   std::source_location::current(), __VA_ARGS__)
+void centerOrigin(sf::Sprite& sprite);
+void centerOrigin(sf::Text& text);
 
 #endif // UTILS_H
