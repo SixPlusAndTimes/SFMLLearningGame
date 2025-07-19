@@ -14,8 +14,11 @@ namespace Textures
         Eagel,
         Raptor,
         Desert,
+        ButtonNormal,
+        ButtonSelected,
+        ButtonPressed,
+        TitleScreen,
         Invalid,
-        TitleScreen
     };
 }
 namespace Fonts

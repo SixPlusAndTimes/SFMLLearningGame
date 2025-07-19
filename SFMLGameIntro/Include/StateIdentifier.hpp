@@ -10,6 +10,7 @@ namespace States
         Menu,
         Game,
         Loading,
+		Settings,
         Pause
     };
 } // namespace States

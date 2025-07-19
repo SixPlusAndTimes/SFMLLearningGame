@@ -33,6 +33,7 @@ Player::Player()
         node.move(playerSpeed * dt.asSeconds(), 0.f); }
     };
 }
+
 void Player::handleEvent(const sf::Event& event, CommandQueue& commandQueue)
 {
     if (event.type == sf::Event::KeyPressed

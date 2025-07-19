@@ -53,8 +53,8 @@ class StateStack : public sf::NonCopyable
 // to be understanded
 template <typename T>
 void StateStack::registerState(States::ID stateId) {
-    // 1. this refer to what?
-    // 2. what if we do not capture this?
+    // 1. this refer to what? -- refer to statestack NOT the caller
+    // 2. what if we do not capture this? -- lambda cannot capture lambda implicitly
     mFactory[stateId] = [this]() {
         return State::Ptr(std::make_unique<T>(*this, mContext));
 	};

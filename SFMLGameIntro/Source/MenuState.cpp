@@ -1,59 +1,54 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "MenuState.hpp"
 #include "ResourceHolder.hpp"
+#include "Button.hpp"
 #include "utils.hpp"
 
 MenuState::MenuState(StateStack &stack, Context context)
 : State(stack, context)
 , mBackGroudSprite()
-, mOptions()
-, mOptionIndex(0)
+, mGUIContainer()
 {
     sf::Texture& texture = context.mTextures->get(Textures::TitleScreen);
-	sf::Font& font = context.mFonts->get(Fonts::Main);
-
 	mBackGroudSprite.setTexture(texture);
-    
-    sf::Text playOption;
-	playOption.setFont(font);
-	playOption.setString("Play");
-	centerOrigin(playOption);
-	playOption.setPosition(context.mWindow->getView().getSize() / 2.f);
-	mOptions.push_back(playOption);
 
-	sf::Text exitOption;
-	exitOption.setFont(font);
-	exitOption.setString("Exit");
-	centerOrigin(exitOption);
-	exitOption.setPosition(playOption.getPosition() + sf::Vector2f(0.f, 30.f));
-	mOptions.push_back(exitOption);
+	auto playButton = std::make_shared<GUI::Button>(*context.mFonts, *context.mTextures);
+	playButton->setPosition(100, 250);
+	playButton->setText("Play");
+	playButton->setCallback([this] ()
+	{
+		requestStackPop();
+		requestStackPush(States::Game);
+	});
 
-    updateOptionText();
+	auto settingsButton = std::make_shared<GUI::Button>(*context.mFonts, *context.mTextures);
+	settingsButton->setPosition(100, 300);
+	settingsButton->setText("Settings");
+	settingsButton->setCallback([this] ()
+	{
+		 requestStackPush(States::Settings);
+	});
+
+	auto exitButton = std::make_shared<GUI::Button>(*context.mFonts, *context.mTextures);
+	exitButton->setPosition(100, 350);
+	exitButton->setText("Exit");
+	exitButton->setCallback([this] ()
+	{
+		requestStackPop();
+	});
+
+	mGUIContainer.pack(playButton);
+	mGUIContainer.pack(settingsButton);
+	mGUIContainer.pack(exitButton);
 }
 
-void MenuState::updateOptionText()
-{
-    if (mOptions.empty())
-    {
-        return;
-    }
-    for (auto& text : mOptions)
-    {
-        text.setFillColor(sf::Color::White);
-    }
-
-    mOptions[mOptionIndex].setFillColor(sf::Color::Red);
-}
 
 void MenuState::draw() 
 {
 	sf::RenderWindow& window = *getContext().mWindow;
     window.setView(window.getDefaultView());
 	window.draw(mBackGroudSprite);
-	for (const auto& text : mOptions)
-	{
-		window.draw(text);
-	}
+    window.draw(mGUIContainer);
 }
 
 bool MenuState::update(sf::Time dt) 
@@ -63,46 +58,6 @@ bool MenuState::update(sf::Time dt)
 
 bool MenuState::handleEvent(const sf::Event& event) 
 {
-    if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Up) {
-        if (mOptionIndex > 0)
-        {
-            --mOptionIndex;
-        }
-        else
-        {
-            mOptionIndex = mOptions.size() - 1;
-        }
-        updateOptionText();
-    }
-    else if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Down)
-    {
-        if (mOptionIndex < mOptions.size() - 1)
-        {
-            ++mOptionIndex;
-        }
-        else 
-        {
-            mOptionIndex = 0;
-        }
-        updateOptionText();
-    }
-    else if (event.key.code == sf::Keyboard::Return)
-    {
-        if (mOptionIndex == Play)
-        {
-            requestStackPop();
-            requestStackPush(States::Game);
-        }
-        else if (mOptionIndex == Exit)
-        {
-            requestStackPop();
-        }
-        else
-        {
-            printf("unknown option index\n");
-            assert(false);
-        }
-    }
-
+    mGUIContainer.handleEvent(event);
     return true;
 }

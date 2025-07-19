@@ -138,17 +138,24 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Aircraft.hpp" />
+    <ClInclude Include="Include\Button.hpp" />
     <ClInclude Include="Include\Command.hpp" />
     <ClInclude Include="Include\CommandQueue.hpp" />
+    <ClInclude Include="Include\Component.hpp" />
+    <ClInclude Include="Include\Container.hpp" />
     <ClInclude Include="Include\Entity.hpp" />
     <ClInclude Include="Include\Game.hpp" />
     <ClInclude Include="Include\GameState.hpp" />
+    <ClInclude Include="Include\Label.hpp" />
+    <ClInclude Include="Include\LoadingState.hpp" />
     <ClInclude Include="Include\MenuState.hpp" />
+    <ClInclude Include="Include\ParallelTask.hpp" />
     <ClInclude Include="Include\PauseState.hpp" />
     <ClInclude Include="Include\Player.hpp" />
     <ClInclude Include="Include\ResourceHolder.hpp" />
     <ClInclude Include="Include\ResourceIdentifier.hpp" />
     <ClInclude Include="Include\SceneNode.hpp" />
+    <ClInclude Include="Include\SettingsState.hpp" />
     <ClInclude Include="Include\SpriteNode.hpp" />
     <ClInclude Include="Include\State.hpp" />
     <ClInclude Include="Include\StateIdentifier.hpp" />
@@ -161,16 +168,21 @@
   <ItemGroup>
     <ClCompile Include="Source\Aircraft.cpp" />
     <ClCompile Include="Source\Application.cpp" />
+    <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\Command.cpp" />
     <ClCompile Include="Source\CommandQueue.cpp" />
+    <ClCompile Include="Source\Component.cpp" />
+    <ClCompile Include="Source\Container.cpp" />
     <ClCompile Include="Source\Entity.cpp" />
     <ClCompile Include="Source\Game.cpp" />
     <ClCompile Include="Source\GameState.cpp" />
+    <ClCompile Include="Source\Label.cpp" />
     <ClCompile Include="Source\Main.cpp" />
     <ClCompile Include="Source\MenuState.cpp" />
     <ClCompile Include="Source\PauseState.cpp" />
     <ClCompile Include="Source\Player.cpp" />
     <ClCompile Include="Source\SceneNode.cpp" />
+    <ClCompile Include="Source\SettingsState.cpp" />
     <ClCompile Include="Source\SpriteNode.cpp" />
     <ClCompile Include="Source\State.cpp" />
     <ClCompile Include="Source\StateStack.cpp" />

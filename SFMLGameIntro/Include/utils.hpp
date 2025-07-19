@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <source_location>
+#include <SFML/Window/Keyboard.hpp>
 namespace sf
 {
     class Sprite;
@@ -57,4 +58,5 @@ enum class LogLevel {
 void centerOrigin(sf::Sprite& sprite);
 void centerOrigin(sf::Text& text);
 
+std::string toString(sf::Keyboard::Key key);
 #endif // UTILS_H
