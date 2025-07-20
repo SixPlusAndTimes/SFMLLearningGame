@@ -12,13 +12,32 @@
 class World : public sf::NonCopyable
 {
     public:
-        explicit World(sf::RenderWindow& window);
-        void update(sf::Time dt);
-        void draw();
-        CommandQueue&    getCommandQueue();
+        struct SpawnPoint
+        {
+            SpawnPoint(Aircraft::Type type, float x, float y)
+            : type(type)
+            , x(x)
+            , y(y)
+            {}
+
+            Aircraft::Type type;
+            float          x;
+            float          y;
+        };
+        
+    public:
+                                            explicit World(sf::RenderWindow& window, FontHolder& fonts);
+        void                                update(sf::Time dt);
+        void                                draw();
+        CommandQueue&                       getCommandQueue();
     private:
-        void            loadTextures();
-        void            buildScene();
+        void                                loadTextures();
+        void                                buildScene();
+        void								addEnemies();
+		void								addEnemy(Aircraft::Type type, float relX, float relY);
+        void                                spawnEnemies();
+        sf::FloatRect						getViewBounds() const;
+		sf::FloatRect						getBattlefieldBounds() const;
     private:
         enum 
         {
@@ -30,6 +49,7 @@ class World : public sf::NonCopyable
         sf::RenderWindow&                   mWindow;
         sf::View                            mWorldView;
         TextureHolder                       mTextures; 
+        FontHolder&							mFonts;
         SceneNode                           mSceneGragh;
         std::array<SceneNode*, LayerCount>  mSceneLayers;
         sf::FloatRect                       mWorldBounds;
@@ -37,5 +57,7 @@ class World : public sf::NonCopyable
         float                               mScrollSpeed;
         Aircraft*                           mPlayerAircraft;
         CommandQueue                        mCommandQueue;
+
+        std::vector<SpawnPoint>             mEnemySpawnPoints;
 };
 #endif // WORLD_HBlendNone

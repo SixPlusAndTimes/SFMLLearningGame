@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Include\Game.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Include\StringHelpers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -96,11 +93,11 @@
     <ClInclude Include="Include\SettingsState.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\TextNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -165,6 +162,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Label.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\DataTables.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TextNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

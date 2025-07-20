@@ -2,7 +2,6 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include "utils.hpp"
-
 std::string toString(sf::Keyboard::Key key)
 {
 	#define BOOK_KEYTOSTRING_CASE(KEY) case sf::Keyboard::KEY: return #KEY;
@@ -126,4 +125,16 @@ void centerOrigin(sf::Text& text)
 {
 	sf::FloatRect bounds = text.getLocalBounds();
 	text.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
+}
+
+constexpr double sPI = 3.141592653589793238462643383f;
+
+float toDegree(float radian)
+{
+	return 180.f / sPI * radian;
+}
+
+float toRadian(float degree)
+{
+	return sPI / 180.f * degree;
 }

@@ -46,3 +46,29 @@ void Entity::accelerate(float vx, float vy)
     mVelocity.x += vx;
     mVelocity.y += vy;
 }
+
+void Entity::repair(int points) 
+{
+
+
+}
+
+void Entity::damage(int points) 
+{
+
+
+}
+
+void Entity::destroy() {
+
+}
+
+int  Entity::getHitpoints() const 
+{
+    return mHitpoints;
+}
+
+bool Entity::isDestroyed() const 
+{
+    return false;
+}

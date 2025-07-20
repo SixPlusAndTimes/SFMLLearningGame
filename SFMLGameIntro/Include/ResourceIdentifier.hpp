@@ -14,6 +14,7 @@ namespace Textures
         Eagel,
         Raptor,
         Desert,
+        Avenger,
         ButtonNormal,
         ButtonSelected,
         ButtonPressed,
