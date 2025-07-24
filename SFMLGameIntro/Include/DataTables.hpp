@@ -24,5 +24,13 @@ struct AircraftData
     std::vector<Direction>  directions;
 };
 
-std::vector<AircraftData> initializeAircraftData();
+struct ProjectileData
+{
+	int                     damage;
+	float                   speed;
+	Textures::ID            texture;
+};
+
+std::vector<AircraftData>       initializeAircraftData();
+std::vector<ProjectileData>     initializeProjectileData();
 #endif // DATATABLES_H

@@ -1,4 +1,10 @@
 #include <Entity.hpp>
+Entity::Entity(int hitpoints)
+: mVelocity()
+, mHitpoints(hitpoints)
+{
+}
+
 void Entity::setVelocity(sf::Vector2f velocity)
 {
     mVelocity = velocity;
@@ -15,7 +21,7 @@ sf::Vector2f Entity::getVelocity()
     return mVelocity;
 }
 
-void Entity::updateCurrent(sf::Time dt) 
+void Entity::updateCurrent(sf::Time dt, CommandQueue& commandQueue) 
 {
     move(mVelocity * dt.asSeconds()); // fun move() inherite from transformable
 }

@@ -1,7 +1,8 @@
+#include "utils.hpp"
 #include <cmath>
+#include <cassert>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
-#include "utils.hpp"
 std::string toString(sf::Keyboard::Key key)
 {
 	#define BOOK_KEYTOSTRING_CASE(KEY) case sf::Keyboard::KEY: return #KEY;
@@ -137,4 +138,15 @@ float toDegree(float radian)
 float toRadian(float degree)
 {
 	return sPI / 180.f * degree;
+}
+
+float length(sf::Vector2f vector)
+{
+	return std::sqrt(vector.x * vector.x + vector.y * vector.y);
+}
+
+sf::Vector2f unitVector(sf::Vector2f vector)
+{
+	assert(vector != sf::Vector2f(0.f, 0.f));
+	return vector / length(vector);
 }

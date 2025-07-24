@@ -3,9 +3,10 @@
 #include <cassert>
 #include <iostream>
 
-SceneNode::SceneNode() 
+SceneNode::SceneNode(Category::Type catagory) 
 : mChildren()
 , mParent(nullptr)
+, mDefaultCategory(catagory)
 {
 
 }
@@ -48,27 +49,27 @@ void SceneNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) c
     // std::cout << "SceneNode Draw\n";
 }
 
-void SceneNode::update(sf::Time dt) 
+void SceneNode::update(sf::Time dt, CommandQueue& commandQueue) 
 {
-    updateCurrent(dt);
-    updateChildren(dt);
+    updateCurrent(dt, commandQueue);
+    updateChildren(dt, commandQueue);
 }
 
-void SceneNode::updateCurrent(sf::Time dt) 
+void SceneNode::updateCurrent(sf::Time dt, CommandQueue& commandQueue) 
 {
 
 }
 
-void SceneNode::updateChildren(sf::Time dt) 
+void SceneNode::updateChildren(sf::Time dt, CommandQueue& commandQueue) 
 {
     for (const Ptr& child : mChildren) {
-        child->update(dt);
+        child->update(dt, commandQueue);
     }
 }
 
-Category::Type SceneNode::getCategory() const
+unsigned int SceneNode::getCategory() const
 {
-    return Category::Scene;
+    return Category::SceneAirLayer;
 }
 
 void SceneNode::onCommand(const Command& command, sf::Time dt)

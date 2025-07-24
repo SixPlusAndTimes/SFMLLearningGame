@@ -27,7 +27,7 @@ void World::update(sf::Time dt)
 {
     mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());
 
-    mPlayerAircraft->setVelocity(0.f, 0.f);
+    mPlayerAircraft->setVelocity(0.f, 0.f); // note here, player speed set zero first before each rendering
 
     // Forward commands to the scene gragh
     while (!mCommandQueue.isEmpty())
@@ -45,7 +45,7 @@ void World::update(sf::Time dt)
 
     spawnEnemies();
     // update scenenodes
-    mSceneGragh.update(dt);
+    mSceneGragh.update(dt, mCommandQueue);
 
     // restrict player position in bounds
     sf::FloatRect viewBounds{mWorldView.getCenter() - mWorldView.getSize() / 2.0f, mWorldView.getSize()};
@@ -73,6 +73,8 @@ void World::loadTextures()
     mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
     mTextures.load(Textures::Raptor, "Media/Textures/Raptor.png");
     mTextures.load(Textures::Avenger, "Media/Textures/Avenger.png");
+    mTextures.load(Textures::Bullet, "Media/Textures/Bullet.png");
+    mTextures.load(Textures::Missile, "Media/Textures/Missile.png");
 }
 
 void World::buildScene()
@@ -124,14 +126,14 @@ sf::FloatRect World::getBattlefieldBounds() const
 
 void World::addEnemies() 
 {
-	addEnemy(Aircraft::Raptor,    0.f,  500.f);
-	addEnemy(Aircraft::Raptor,    0.f, 1000.f);
-	addEnemy(Aircraft::Raptor, +100.f, 1100.f);
-	addEnemy(Aircraft::Raptor, -100.f, 1100.f);
-	addEnemy(Aircraft::Avenger, -70.f, 1400.f);
-	addEnemy(Aircraft::Avenger, -70.f, 1600.f);
-	addEnemy(Aircraft::Avenger,  70.f, 1400.f);
-	addEnemy(Aircraft::Avenger,  70.f, 1600.f);
+	addEnemy(Aircraft::Raptor,    0.f,  100.f);
+	// addEnemy(Aircraft::Raptor,    0.f, 1000.f);
+	// addEnemy(Aircraft::Raptor, +100.f, 1100.f);
+	// addEnemy(Aircraft::Raptor, -100.f, 1100.f);
+	// addEnemy(Aircraft::Avenger, -70.f, 1100.f);
+	// addEnemy(Aircraft::Avenger, -70.f, 1600.f);
+	// addEnemy(Aircraft::Avenger,  70.f, 1400.f);
+	// addEnemy(Aircraft::Avenger,  70.f, 1600.f);
 
 	std::sort(mEnemySpawnPoints.begin(), mEnemySpawnPoints.end(), [] (SpawnPoint lhs, SpawnPoint rhs)
 	{

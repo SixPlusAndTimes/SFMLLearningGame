@@ -12,6 +12,8 @@ class Player
             MoveRight,
             MoveUp,
             MoveDown,
+            Fire,
+            LaunchMissile,
             ActionCount
         };
         Player();
@@ -21,6 +23,7 @@ class Player
         void                handleRealtimeInput(CommandQueue& commandQueue);
     private:
         static bool         isRealtimeAction(Action action);
+        void                initializeActions();
     private:
         std::map<sf::Keyboard::Key, Action> mKeyBinding;
         std::map<Action, Command>           mActionBinding;

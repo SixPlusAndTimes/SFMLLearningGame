@@ -81,7 +81,7 @@ void Application::update(sf::Time dt)
     mStateStack.update(dt);
 }
 
-void    Application::render()
+void Application::render()
 {
     mWindow.clear();
     mStateStack.draw();
@@ -91,7 +91,7 @@ void    Application::render()
     mWindow.display();
 }
 
-void    Application::updateStatistics(sf::Time dt)
+void Application::updateStatistics(sf::Time dt)
 {
     mStatisticsUpdateTime += dt;
 	mStatisticFrameNums += 1;

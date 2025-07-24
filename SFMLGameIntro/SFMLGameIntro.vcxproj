@@ -151,6 +151,7 @@
     <ClInclude Include="Include\ParallelTask.hpp" />
     <ClInclude Include="Include\PauseState.hpp" />
     <ClInclude Include="Include\Player.hpp" />
+    <ClInclude Include="Include\Projectile.hpp" />
     <ClInclude Include="Include\ResourceHolder.hpp" />
     <ClInclude Include="Include\ResourceIdentifier.hpp" />
     <ClInclude Include="Include\SceneNode.hpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Source\MenuState.cpp" />
     <ClCompile Include="Source\PauseState.cpp" />
     <ClCompile Include="Source\Player.cpp" />
+    <ClCompile Include="Source\Projectile.cpp" />
     <ClCompile Include="Source\SceneNode.cpp" />
     <ClCompile Include="Source\SettingsState.cpp" />
     <ClCompile Include="Source\SpriteNode.cpp" />

@@ -1,4 +1,5 @@
 #include "DataTables.hpp"
+#include "Projectile.hpp"
 #include "Aircraft.hpp"
 // why not std::array ?
 std::vector<AircraftData> initializeAircraftData()
@@ -15,7 +16,7 @@ std::vector<AircraftData> initializeAircraftData()
     data[Aircraft::Raptor].directions.emplace_back(+45.f, 80.f);
 	data[Aircraft::Raptor].directions.emplace_back(-45.f, 160.f);
 	data[Aircraft::Raptor].directions.emplace_back(+45.f, 80.f);
-    data[Aircraft::Raptor].fireInterval = sf::Time::Zero;
+    data[Aircraft::Raptor].fireInterval = sf::seconds(2);
     data[Aircraft::Raptor].texture = Textures::Raptor;
 
     data[Aircraft::Avenger].hitpoints = 40;
@@ -29,4 +30,23 @@ std::vector<AircraftData> initializeAircraftData()
 	data[Aircraft::Avenger].fireInterval = sf::seconds(2);
 
     return data;
+}
+
+std::vector<ProjectileData> initializeProjectileData()
+{
+	std::vector<ProjectileData> data(Projectile::TypeCount);
+
+	data[Projectile::AlliedBullet].damage = 10;
+	data[Projectile::AlliedBullet].speed = 300.f;
+	data[Projectile::AlliedBullet].texture = Textures::Bullet;
+
+	data[Projectile::EnemyBullet].damage = 10;
+	data[Projectile::EnemyBullet].speed = 300.f;
+	data[Projectile::EnemyBullet].texture = Textures::Bullet;
+
+	data[Projectile::Missile].damage = 200;
+	data[Projectile::Missile].speed = 150.f;
+	data[Projectile::Missile].texture = Textures::Missile;
+
+	return data;
 }

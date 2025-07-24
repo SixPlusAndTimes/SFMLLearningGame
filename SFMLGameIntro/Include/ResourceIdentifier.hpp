@@ -19,6 +19,8 @@ namespace Textures
         ButtonSelected,
         ButtonPressed,
         TitleScreen,
+        Bullet,
+        Missile,
         Invalid,
     };
 }
