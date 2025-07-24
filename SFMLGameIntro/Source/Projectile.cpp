@@ -55,6 +55,17 @@ int Projectile::getDamage() const
 
 void Projectile::updateCurrent(sf::Time dt, CommandQueue& commands) 
 {
+  	if (isGuided())
+	{
+		const float approachRate = 200.f;
+
+		sf::Vector2f newVelocity = unitVector(approachRate * dt.asSeconds() * mTargetDirection + getVelocity());
+		newVelocity *= getMaxSpeed();
+		float angle = std::atan2(newVelocity.y, newVelocity.x);
+
+		setRotation(toDegree(angle) + 90.f);
+		setVelocity(newVelocity);
+	}
     Entity::updateCurrent(dt, commands);
 }
 

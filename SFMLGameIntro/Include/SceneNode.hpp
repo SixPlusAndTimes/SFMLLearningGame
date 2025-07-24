@@ -33,5 +33,6 @@ class SceneNode : public sf::Transformable, public sf::Drawable, private sf::Non
         Category::Type		mDefaultCategory;
 };
 
+float distance(const SceneNode& lhs, const SceneNode& rhs);
 
 #endif // SCENENODE_H

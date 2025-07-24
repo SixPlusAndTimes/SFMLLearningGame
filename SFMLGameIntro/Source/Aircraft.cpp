@@ -193,7 +193,7 @@ float Aircraft::getMaxSpeed() const
 void Aircraft::fire() 
 {
 	// Only ships with fire interval != 0 are able to fire
-	if (Table[mType].fireInterval != sf::Time::Zero) // does fireInterval only be used in here?
+	if (Table[mType].fireInterval != sf::Time::Zero) // does fireInterval only be used in here
     {
 		mIsFiring = true;
     }

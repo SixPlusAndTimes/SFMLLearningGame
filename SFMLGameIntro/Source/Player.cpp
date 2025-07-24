@@ -51,16 +51,12 @@ void Player::initializeActions()
 
 void Player::handleEvent(const sf::Event& event, CommandQueue& commandQueue)
 {
-    if (event.type == sf::Event::KeyPressed
-        && event.key.code == sf::Keyboard::P)
+    if (event.type == sf::Event::KeyPressed)
     {
-        Command output;
-        output.category = Category::PlayerAircraft;
-        output.action = [](SceneNode& node, sf::Time dt) {
-            std::cout << node.getPosition().x << ","
-                      << node.getPosition().y << "\n";
-        };
-        commandQueue.push(output);
+		// Check if pressed key appears in key binding, trigger command if so
+		auto found = mKeyBinding.find(event.key.code);
+		if (found != mKeyBinding.end() && !isRealtimeAction(found->second))
+			commandQueue.push(mActionBinding[found->second]);
     }
 }
 

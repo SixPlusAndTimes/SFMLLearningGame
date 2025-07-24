@@ -30,6 +30,7 @@ class World : public sf::NonCopyable
         void                                update(sf::Time dt);
         void                                draw();
         CommandQueue&                       getCommandQueue();
+
     private:
         void                                loadTextures();
         void                                buildScene();
@@ -38,6 +39,8 @@ class World : public sf::NonCopyable
         void                                spawnEnemies();
         sf::FloatRect						getViewBounds() const;
 		sf::FloatRect						getBattlefieldBounds() const;
+        void                                guideMissiles();
+
     private:
         enum 
         {
@@ -45,6 +48,7 @@ class World : public sf::NonCopyable
             Air,
             LayerCount
         };
+
     private:
         sf::RenderWindow&                   mWindow;
         sf::View                            mWorldView;
@@ -57,7 +61,7 @@ class World : public sf::NonCopyable
         float                               mScrollSpeed;
         Aircraft*                           mPlayerAircraft;
         CommandQueue                        mCommandQueue;
-
         std::vector<SpawnPoint>             mEnemySpawnPoints;
+        std::vector<Aircraft*>              mActivateEnemies;
 };
 #endif // WORLD_HBlendNone

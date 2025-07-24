@@ -26,6 +26,8 @@ World::World(sf::RenderWindow& window, FontHolder& fonts)
 void World::update(sf::Time dt)
 {
     mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());
+    
+	guideMissiles();
 
     mPlayerAircraft->setVelocity(0.f, 0.f); // note here, player speed set zero first before each rendering
 
@@ -126,14 +128,14 @@ sf::FloatRect World::getBattlefieldBounds() const
 
 void World::addEnemies() 
 {
-	addEnemy(Aircraft::Raptor,    0.f,  100.f);
-	// addEnemy(Aircraft::Raptor,    0.f, 1000.f);
-	// addEnemy(Aircraft::Raptor, +100.f, 1100.f);
-	// addEnemy(Aircraft::Raptor, -100.f, 1100.f);
-	// addEnemy(Aircraft::Avenger, -70.f, 1100.f);
-	// addEnemy(Aircraft::Avenger, -70.f, 1600.f);
-	// addEnemy(Aircraft::Avenger,  70.f, 1400.f);
-	// addEnemy(Aircraft::Avenger,  70.f, 1600.f);
+	addEnemy(Aircraft::Raptor,    0.f,  500.f);
+	addEnemy(Aircraft::Raptor,    0.f, 1000.f);
+	addEnemy(Aircraft::Raptor, +100.f, 1100.f);
+	addEnemy(Aircraft::Raptor, -100.f, 1100.f);
+	addEnemy(Aircraft::Avenger, -70.f, 1100.f);
+	addEnemy(Aircraft::Avenger, -70.f, 1600.f);
+	addEnemy(Aircraft::Avenger,  70.f, 1400.f);
+	addEnemy(Aircraft::Avenger,  70.f, 1600.f);
 
 	std::sort(mEnemySpawnPoints.begin(), mEnemySpawnPoints.end(), [] (SpawnPoint lhs, SpawnPoint rhs)
 	{
@@ -160,4 +162,47 @@ void World::spawnEnemies()
 
         mEnemySpawnPoints.pop_back();
     }
+}
+
+void World::guideMissiles()
+{
+    Command enemyCollector;
+    enemyCollector.category = Category::EnemyAircraft;
+    enemyCollector.action = derivedAction<Aircraft>([this](Aircraft& node, sf::Time dt) 
+    {
+        if (!node.isDestroyed())
+        {
+            mActivateEnemies.push_back(&node);
+        }
+    });
+
+    Command missileGuider;
+    missileGuider.category = Category::Projectile;
+    missileGuider.action = derivedAction<Projectile>([this](Projectile& missile, sf::Time dt)
+        {
+            if (!missile.isGuided())
+            {
+                return ;
+            }
+
+            float minDistance = std::numeric_limits<float>::max();
+            Aircraft* closestEnemy = nullptr;
+            for(Aircraft* enemy : mActivateEnemies)
+            {
+                float enemyDistance = distance(missile, *enemy);
+                if (enemyDistance < minDistance)
+                {
+                    closestEnemy = enemy;
+                    minDistance = enemyDistance;
+                }
+            }
+
+            if (closestEnemy)
+            {
+                missile.guideTowards(closestEnemy->getWorldPosition());
+            }
+        });
+        mCommandQueue.push(enemyCollector);
+        mCommandQueue.push(missileGuider);
+        mActivateEnemies.clear();
 }

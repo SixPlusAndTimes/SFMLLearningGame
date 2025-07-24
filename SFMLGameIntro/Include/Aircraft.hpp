@@ -21,6 +21,7 @@ class Aircraft : public Entity
         virtual void    updateCurrent(sf::Time dt, CommandQueue& commandQueue) override;
         void            fire();
         void            launchMissile();
+        virtual unsigned int getCategory() const override;
 
     private:
         Type        mType;
@@ -38,7 +39,6 @@ class Aircraft : public Entity
 		Command     mMissileCommand;
 
     private:
-        virtual unsigned int getCategory() const override;
         void    updateText();
         void    updateMoveMentPattern(sf::Time dt);
         float   getMaxSpeed() const;

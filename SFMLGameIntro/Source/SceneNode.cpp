@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <cassert>
 #include <iostream>
+#include "utils.hpp"
 
 SceneNode::SceneNode(Category::Type catagory) 
 : mChildren()
@@ -82,4 +83,9 @@ void SceneNode::onCommand(const Command& command, sf::Time dt)
     {
         child->onCommand(command, dt);
     }
+}
+
+float distance(const SceneNode& lhs, const SceneNode& rhs)
+{
+	return length(lhs.getWorldPosition() - rhs.getWorldPosition());
 }
