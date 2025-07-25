@@ -4,7 +4,6 @@
 #include "ResourceHolder.hpp"
 #include "State.hpp"
 #include "utils.hpp"
-
 SettingsState::SettingsState(StateStack& stack, Context context)
 : State(stack, context)
 , mGUIContainer()
@@ -22,7 +21,6 @@ SettingsState::SettingsState(StateStack& stack, Context context)
 	backButton->setPosition(80.f, 375.f);
 	backButton->setText("Back");
 
-	// backButton->setCallback(std::bind(&SettingsState::requestStackPop, this));
 	backButton->setCallback([this](){
         requestStackPop();
     });

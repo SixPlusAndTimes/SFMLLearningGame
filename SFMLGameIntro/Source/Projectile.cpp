@@ -3,6 +3,7 @@
 #include "DataTables.hpp"
 #include "utils.hpp"
 #include <cassert>
+#include <cmath>
 namespace
 {
 	const std::vector<ProjectileData> Table = initializeProjectileData();

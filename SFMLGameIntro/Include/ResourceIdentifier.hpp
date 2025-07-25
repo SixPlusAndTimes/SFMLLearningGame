@@ -21,6 +21,10 @@ namespace Textures
         TitleScreen,
         Bullet,
         Missile,
+        HealthRefill,
+        MissileRefill,
+        FireSpread,
+        FireRate,
         Invalid,
     };
 }

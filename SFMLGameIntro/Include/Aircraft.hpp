@@ -23,6 +23,9 @@ class Aircraft : public Entity
         void            launchMissile();
         virtual unsigned int getCategory() const override;
 
+        void            increaseFireRate();
+		void            increaseSpread();
+		void            collectMissiles(unsigned int count);
     private:
         Type        mType;
         sf::Sprite  mSprite;

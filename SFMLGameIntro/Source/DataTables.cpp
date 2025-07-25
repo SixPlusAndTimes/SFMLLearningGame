@@ -1,6 +1,7 @@
 #include "DataTables.hpp"
 #include "Projectile.hpp"
 #include "Aircraft.hpp"
+#include "Pickup.hpp"
 // why not std::array ?
 std::vector<AircraftData> initializeAircraftData()
 {
@@ -49,4 +50,23 @@ std::vector<ProjectileData> initializeProjectileData()
 	data[Projectile::Missile].texture = Textures::Missile;
 
 	return data;
+}
+
+std::vector<PickupData> initializePickupData()
+{
+	std::vector<PickupData> data(Pickup::TypeCount);
+	
+	data[Pickup::HealthRefill].texture = Textures::HealthRefill;
+	data[Pickup::HealthRefill].action = [] (Aircraft& a) { a.repair(25); };
+	
+	data[Pickup::MissileRefill].texture = Textures::MissileRefill;
+	data[Pickup::MissileRefill].action = [] (Aircraft& a) { a.collectMissiles(3); };
+	
+	data[Pickup::FireSpread].texture = Textures::FireSpread;
+	
+	data[Pickup::MissileRefill].action = [] (Aircraft& a) { a.increaseFireRate(); };
+	data[Pickup::FireRate].texture = Textures::FireRate;
+	data[Pickup::MissileRefill].action = [] (Aircraft& a) { a.increaseFireRate(); };
+
+	return data;	
 }

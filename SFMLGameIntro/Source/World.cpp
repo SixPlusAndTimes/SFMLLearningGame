@@ -26,7 +26,7 @@ World::World(sf::RenderWindow& window, FontHolder& fonts)
 void World::update(sf::Time dt)
 {
     mWorldView.move(0.f, mScrollSpeed * dt.asSeconds());
-    
+
 	guideMissiles();
 
     mPlayerAircraft->setVelocity(0.f, 0.f); // note here, player speed set zero first before each rendering
@@ -75,8 +75,14 @@ void World::loadTextures()
     mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
     mTextures.load(Textures::Raptor, "Media/Textures/Raptor.png");
     mTextures.load(Textures::Avenger, "Media/Textures/Avenger.png");
+
     mTextures.load(Textures::Bullet, "Media/Textures/Bullet.png");
     mTextures.load(Textures::Missile, "Media/Textures/Missile.png");
+
+    mTextures.load(Textures::HealthRefill, "Media/Textures/HealthRefill.png");
+    mTextures.load(Textures::MissileRefill, "Media/Textures/MissileRefill.png");
+    mTextures.load(Textures::FireSpread, "Media/Textures/FireSpread.png");
+    mTextures.load(Textures::FireRate, "Media/Textures/FireRate.png");
 }
 
 void World::buildScene()
