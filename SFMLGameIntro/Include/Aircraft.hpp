@@ -26,6 +26,8 @@ class Aircraft : public Entity
         void            increaseFireRate();
 		void            increaseSpread();
 		void            collectMissiles(unsigned int count);
+
+		virtual sf::FloatRect	getBoundingRect() const override;
     private:
         Type        mType;
         sf::Sprite  mSprite;
@@ -40,15 +42,19 @@ class Aircraft : public Entity
         bool        mIsLaunchingMissile;
         Command     mFireCommand;
 		Command     mMissileCommand;
-
+        bool        mIsMarkedForRemoval;
+        Command     mDropPickupCommand;
     private:
-        void    updateText();
-        void    updateMoveMentPattern(sf::Time dt);
-        float   getMaxSpeed() const;
-        void    checkProjectileLaunch(sf::Time dt, CommandQueue& commandQueue);
-        void    createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures) const;
-        void    createBullets(SceneNode& node, const TextureHolder& textures) const;
-        bool    isAllied() const;
+        void            updateText();
+        void            updateMoveMentPattern(sf::Time dt);
+        float           getMaxSpeed() const;
+        void            checkProjectileLaunch(sf::Time dt, CommandQueue& commandQueue);
+        void            createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures) const;
+        void            createBullets(SceneNode& node, const TextureHolder& textures) const;
+        bool            isAllied() const;
+        virtual bool    isMarkedForRemoval() const;
+        void            checkPickupDrop(CommandQueue& commands);
+        void            createPickup(SceneNode& node, const TextureHolder& textures) const;
 };
 
 #endif // AIRCRAFT_H

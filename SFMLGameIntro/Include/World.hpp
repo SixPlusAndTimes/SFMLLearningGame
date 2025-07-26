@@ -40,7 +40,9 @@ class World : public sf::NonCopyable
         sf::FloatRect						getViewBounds() const;
 		sf::FloatRect						getBattlefieldBounds() const;
         void                                guideMissiles();
-
+        void                                handleCollisions();
+        void                                adaptPlayerPosition();
+        void								destroyEntitiesOutsideView();
     private:
         enum 
         {

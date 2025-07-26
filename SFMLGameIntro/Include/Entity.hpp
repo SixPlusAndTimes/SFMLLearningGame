@@ -18,7 +18,7 @@ class Entity : public SceneNode
         void            damage(int points);
         void            destroy();
         int             getHitpoints() const;
-        bool            isDestroyed() const;
+        virtual bool    isDestroyed() const override;
     private:
         sf::Vector2f    mVelocity;
         int             mHitpoints;

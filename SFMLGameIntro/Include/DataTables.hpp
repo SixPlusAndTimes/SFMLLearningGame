@@ -3,7 +3,7 @@
 #include <SFML/System/Time.hpp>
 #include <vector>
 #include "ResourceIdentifier.hpp"
-
+#include "Aircraft.hpp"
 struct Direction
 {
     Direction(float angle, float distance)

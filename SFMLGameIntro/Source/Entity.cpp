@@ -23,12 +23,12 @@ sf::Vector2f Entity::getVelocity()
 
 void Entity::updateCurrent(sf::Time dt, CommandQueue& commandQueue) 
 {
-    move(mVelocity * dt.asSeconds()); // fun move() inherite from transformable
+    move(mVelocity * dt.asSeconds()); // function move() inherite from transformable
 }
 
 sf::Vector2f SceneNode::getWorldPosition() const 
 {
-    return getWorldTransform() * sf::Vector2f(); // why default Vector2f
+    return getWorldTransform() * sf::Vector2f(); // why using default Vector2f? I mean why dimension is a since transform matrix is 3 * 3 -- May be converted to Homogeneous coordinates autimatically
 }
 
 sf::Transform SceneNode::getWorldTransform() const 
@@ -55,18 +55,21 @@ void Entity::accelerate(float vx, float vy)
 
 void Entity::repair(int points) 
 {
+	assert(points > 0);
 
-
+	mHitpoints += points;
 }
 
 void Entity::damage(int points) 
 {
+	assert(points > 0);
 
-
+	mHitpoints -= points;
 }
 
-void Entity::destroy() {
-
+void Entity::destroy() 
+{
+	mHitpoints = 0;
 }
 
 int  Entity::getHitpoints() const 
@@ -76,5 +79,5 @@ int  Entity::getHitpoints() const
 
 bool Entity::isDestroyed() const 
 {
-    return false;
+	return mHitpoints <= 0;
 }

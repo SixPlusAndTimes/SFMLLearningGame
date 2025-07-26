@@ -1,8 +1,20 @@
 #include "utils.hpp"
 #include <cmath>
 #include <cassert>
+#include <random>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Text.hpp>
+namespace
+{
+	std::default_random_engine createRandomEngine()
+	{
+		auto seed = static_cast<unsigned long>(std::time(nullptr));
+		return std::default_random_engine(seed);
+	}
+
+	auto RandomEngine = createRandomEngine();
+}
+
 std::string toString(sf::Keyboard::Key key)
 {
 	#define BOOK_KEYTOSTRING_CASE(KEY) case sf::Keyboard::KEY: return #KEY;
@@ -149,4 +161,10 @@ sf::Vector2f unitVector(sf::Vector2f vector)
 {
 	assert(vector != sf::Vector2f(0.f, 0.f));
 	return vector / length(vector);
+}
+
+int randomInt(int exclusiveMax)
+{
+	std::uniform_int_distribution<> distr(0, exclusiveMax - 1);
+	return distr(RandomEngine);
 }
