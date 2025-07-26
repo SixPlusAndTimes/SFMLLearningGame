@@ -77,7 +77,9 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures, const FontHolder& f
 
 void Aircraft::createPickup(SceneNode& node, const TextureHolder& textures) const
 {
-	auto type = static_cast<Pickup::Type>(randomInt(Pickup::TypeCount));
+    int ii = randomInt(Pickup::TypeCount);
+    // std::cout << "createPickup type" << ii << std::endl;
+	auto type = static_cast<Pickup::Type>(ii);
 
 	std::unique_ptr<Pickup> pickup = std::make_unique<Pickup>(type, textures);
 

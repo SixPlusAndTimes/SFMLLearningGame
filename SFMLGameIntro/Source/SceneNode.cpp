@@ -107,6 +107,10 @@ void SceneNode::onCommand(const Command& command, sf::Time dt)
 
 bool collision(const SceneNode& lhs, const SceneNode& rhs)
 {
+    // std::cout << "collision detect type1:" << lhs.getCategory() << " type2:" << rhs.getCategory() << std::endl;
+    // std::cout << "collission detect lhs.left: " << lhs.getBoundingRect().left << " lhs.top: " << lhs.getBoundingRect().top  << " lhs.width: " << lhs.getBoundingRect().width << " lhs.height: " << lhs.getBoundingRect().height << std::endl;
+    // std::cout << "collission detect rhs.left: " << rhs.getBoundingRect().left << " rhs.top: " << rhs.getBoundingRect().top  << " rhs.width: " << rhs.getBoundingRect().width << " rhs.height: " << rhs.getBoundingRect().height << std::endl;
+
 	return lhs.getBoundingRect().intersects(rhs.getBoundingRect());
 }
 
@@ -121,7 +125,7 @@ void SceneNode::checkSceneCollision(SceneNode& sceneGraph, std::set<Pair>& colli
 
     for (Ptr& child : sceneGraph.mChildren)
     {
-        checkNodeCollision(*child, collisionPairs);
+        checkSceneCollision(*child, collisionPairs);
     }
 }
 

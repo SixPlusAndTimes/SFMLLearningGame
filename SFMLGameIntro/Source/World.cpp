@@ -152,18 +152,18 @@ sf::FloatRect World::getBattlefieldBounds() const
 
 void World::addEnemies() 
 {
-	addEnemy(Aircraft::Raptor,    0.f, 300.f);
-	addEnemy(Aircraft::Avenger, -70.f, 500.f);
-	// addEnemy(Aircraft::Raptor, +100.f, 1100.f);
-	// addEnemy(Aircraft::Raptor, -100.f, 1100.f);
-	// addEnemy(Aircraft::Avenger, -70.f, 1600.f);
-	// addEnemy(Aircraft::Avenger,  70.f, 1400.f);
-	// addEnemy(Aircraft::Avenger,  70.f, 1600.f);
+	addEnemy(Aircraft::Raptor,    0.f, 700.f);
+	addEnemy(Aircraft::Avenger, -70.f, 800.f);
+	addEnemy(Aircraft::Raptor, +100.f, 1100.f);
+	addEnemy(Aircraft::Raptor, -100.f, 1100.f);
+	addEnemy(Aircraft::Avenger, -70.f, 1600.f);
+	addEnemy(Aircraft::Avenger,  70.f, 1400.f);
+	addEnemy(Aircraft::Avenger,  70.f, 1600.f);
 
-	// std::sort(mEnemySpawnPoints.begin(), mEnemySpawnPoints.end(), [] (SpawnPoint lhs, SpawnPoint rhs)
-	// {
-	// 	return lhs.y < rhs.y;
-	// });
+	std::sort(mEnemySpawnPoints.begin(), mEnemySpawnPoints.end(), [] (SpawnPoint lhs, SpawnPoint rhs)
+	{
+		return lhs.y < rhs.y;
+	});
 }
 
 void World::addEnemy(Aircraft::Type type, float relX, float relY) 
@@ -235,14 +235,13 @@ void World::handleCollisions()
 	std::set<SceneNode::Pair> collisionPairs;
 	mSceneGragh.checkSceneCollision(mSceneGragh, collisionPairs);
 
-    if (collisionPairs.size() != 0) {
-        std::cout << "collect collision pair, size = " << collisionPairs.size()<< std::endl;
-        for (auto& [type1, type2] : collisionPairs)
-        {
-			std::cout << "collision between " << type1->getCategory() << " and " << type2->getCategory() << std::endl;
-        }
-    }
-
+    //if (collisionPairs.size() != 0) {
+        //std::cout << "collect collision pair, size = " << collisionPairs.size()<< std::endl;
+   //     for (auto& [type1, type2] : collisionPairs)
+   //     {
+			//std::cout << "collision between " << type1->getCategory() << " and " << type2->getCategory() << std::endl;
+   //     }
+   // } 
     for (SceneNode::Pair pair : collisionPairs)
 	{
 		if (matchesCategories(pair, Category::PlayerAircraft, Category::EnemyAircraft))
@@ -272,7 +271,7 @@ void World::handleCollisions()
 			auto& projectile = static_cast<Projectile&>(*pair.second);
 
 			// Apply projectile damage to aircraft, destroy projectile
-            std::cout << "damage :" << projectile.getDamage();
+            //std::cout << "damage :" << projectile.getDamage();
 			aircraft.damage(projectile.getDamage());
 			projectile.destroy();
 		}

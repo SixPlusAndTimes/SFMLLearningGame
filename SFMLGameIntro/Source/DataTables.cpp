@@ -2,7 +2,9 @@
 #include "Projectile.hpp"
 #include "Aircraft.hpp"
 #include "Pickup.hpp"
+#include <functional>
 // why not std::array ?
+using namespace std::placeholders;
 std::vector<AircraftData> initializeAircraftData()
 {
     std::vector<AircraftData> data(Aircraft::Acicraftcount);
@@ -63,10 +65,10 @@ std::vector<PickupData> initializePickupData()
 	data[Pickup::MissileRefill].action = [] (Aircraft& a) { a.collectMissiles(3); };
 	
 	data[Pickup::FireSpread].texture = Textures::FireSpread;
-	
-	data[Pickup::MissileRefill].action = [] (Aircraft& a) { a.increaseFireRate(); };
+	data[Pickup::FireSpread].action = [] (Aircraft& a) { a.increaseSpread(); };
+
 	data[Pickup::FireRate].texture = Textures::FireRate;
-	data[Pickup::MissileRefill].action = [] (Aircraft& a) { a.increaseFireRate(); };
+	data[Pickup::FireRate].action = [] (Aircraft& a) { a.increaseFireRate(); };
 
 	return data;	
 }
