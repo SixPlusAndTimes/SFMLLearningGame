@@ -20,8 +20,10 @@ struct AircraftData
     int                     hitpoints;
     float                   speed;
     Textures::ID            texture;
+    sf::IntRect						textureRect;
     sf::Time                fireInterval;
     std::vector<Direction>  directions;
+    bool					hasRollAnimation;
 };
 
 struct ProjectileData
@@ -29,12 +31,14 @@ struct ProjectileData
 	int                     damage;
 	float                   speed;
 	Textures::ID            texture;
+    sf::IntRect             textureRect;
 };
 
 struct PickupData
 {
 	std::function<void(Aircraft&)>	action;
 	Textures::ID					texture;
+    sf::IntRect                     textureRect;
 };
 
 std::vector<AircraftData>       initializeAircraftData();

@@ -12,24 +12,12 @@ namespace
     const std::vector<AircraftData> Table = initializeAircraftData();
 } // namespace 
 
-Textures::ID toTextureId(Aircraft::Type type)
-{
-    switch (type)
-    {
-        case Aircraft::Eagle:
-            return Textures::Eagel;
-        case Aircraft::Raptor:
-            return Textures::Raptor; 
-        default:
-            return  Textures::Invalid;
-    }
-}
 
 Aircraft::Aircraft(Type type, const TextureHolder& textures, const FontHolder& fonts) 
 : Entity(Table[type].hitpoints)
 , mType(type)
 , mHealthDisplay(nullptr)
-, mSprite(textures.get(Table[mType].texture))
+, mSprite(textures.get(Table[mType].texture), Table[mType].textureRect)
 , mTravelledDistance(0)
 , mDirectionIndex(0)
 , mIsFiring(false)

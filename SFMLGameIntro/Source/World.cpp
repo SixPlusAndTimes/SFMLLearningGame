@@ -88,18 +88,11 @@ void World::draw()
 
 void World::loadTextures()
 {
-    mTextures.load(Textures::Eagel, "Media/Textures/Eagle.png");
-    mTextures.load(Textures::Desert, "Media/Textures/Desert.png");
-    mTextures.load(Textures::Raptor, "Media/Textures/Raptor.png");
-    mTextures.load(Textures::Avenger, "Media/Textures/Avenger.png");
-
-    mTextures.load(Textures::Bullet, "Media/Textures/Bullet.png");
-    mTextures.load(Textures::Missile, "Media/Textures/Missile.png");
-
-    mTextures.load(Textures::HealthRefill, "Media/Textures/HealthRefill.png");
-    mTextures.load(Textures::MissileRefill, "Media/Textures/MissileRefill.png");
-    mTextures.load(Textures::FireSpread, "Media/Textures/FireSpread.png");
-    mTextures.load(Textures::FireRate, "Media/Textures/FireRate.png");
+	mTextures.load(Textures::Entities, "Media/Textures/Entities.png");
+	mTextures.load(Textures::Jungle, "Media/Textures/Jungle.png");
+	mTextures.load(Textures::Explosion, "Media/Textures/Explosion.png");
+	mTextures.load(Textures::Particle, "Media/Textures/Particle.png");
+	mTextures.load(Textures::FinishLine, "Media/Textures/FinishLine.png");
 }
 
 void World::buildScene()
@@ -114,13 +107,24 @@ void World::buildScene()
         mSceneGragh.attachChild(std::move(layer));
     }
 
-    // setup desert background
-    sf::Texture& texture =  mTextures.get(Textures::Desert);
-    texture.setRepeated(true);
-    sf::IntRect textureRect(mWorldBounds);
-    SceneNode::Ptr backgroundSprinte = std::make_unique<SpriteNode>(texture, textureRect);
-    backgroundSprinte->setPosition(mWorldBounds.left, mWorldBounds.top);
-    mSceneLayers[Background]->attachChild(std::move(backgroundSprinte));
+	// Prepare the tiled background
+	sf::Texture& jungleTexture = mTextures.get(Textures::Jungle);
+	jungleTexture.setRepeated(true);
+
+	float viewHeight = mWorldView.getSize().y;
+	sf::IntRect textureRect(mWorldBounds);
+	textureRect.height += static_cast<int>(viewHeight);
+
+	// Add the background sprite to the scene
+	std::unique_ptr<SpriteNode> jungleSprite = std::make_unique<SpriteNode>(jungleTexture, textureRect);
+	jungleSprite->setPosition(mWorldBounds.left, mWorldBounds.top - viewHeight);
+	mSceneLayers[Background]->attachChild(std::move(jungleSprite));
+
+	// Add the finish line to the scene
+	sf::Texture& finishTexture = mTextures.get(Textures::FinishLine);
+	std::unique_ptr<SpriteNode> finishSprite = std::make_unique<SpriteNode>(finishTexture);
+	finishSprite->setPosition(0.f, -76.f); // why -76.f ?
+	mSceneLayers[Background]->attachChild(std::move(finishSprite));
 
     // player aircraft
     std::unique_ptr<Aircraft> leader = std::make_unique<Aircraft>(Aircraft::Eagle, mTextures, mFonts);
