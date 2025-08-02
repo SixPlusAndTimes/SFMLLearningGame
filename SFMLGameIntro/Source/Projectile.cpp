@@ -2,6 +2,7 @@
 #include "ResourceHolder.hpp"
 #include "DataTables.hpp"
 #include "utils.hpp"
+#include "EmitterNode.hpp"
 #include <cassert>
 #include <cmath>
 namespace
@@ -15,6 +16,17 @@ Projectile::Projectile(Type type, const TextureHolder& textures)
 , mSprite(textures.get(Table[type].texture), Table[type].textureRect)
 {
     centerOrigin(mSprite);
+	if (isGuided())
+	{
+		std::cout << "is guided, create emitter" << std::endl;
+		std::unique_ptr<EmitterNode> smoke = std::make_unique<EmitterNode>(Particle::Smoke);
+		smoke->setPosition(0.f, getBoundingRect().height / 2.f);
+		attachChild(std::move(smoke));
+
+		std::unique_ptr<EmitterNode> propellant(new EmitterNode(Particle::Propellant));
+		propellant->setPosition(0.f, getBoundingRect().height / 2.f);
+		attachChild(std::move(propellant));
+	}
 }
 
 

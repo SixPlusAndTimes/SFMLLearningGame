@@ -1,9 +1,10 @@
 #include "World.hpp"
+#include "Pickup.hpp"
+#include "ParticleNode.hpp"
 #include <SpriteNode.hpp>
 #include <iostream>
 #include <format>
 #include <cmath>
-#include "Pickup.hpp"
 World::World(sf::RenderWindow& window, FontHolder& fonts)
 : mWindow(window)
 , mWorldView(window.getDefaultView())
@@ -100,7 +101,7 @@ void World::buildScene()
     // Create SCeneLayerNode, and attach them to the root node 
     for (std::size_t i = 0; i < LayerCount; ++i)
     {
-        Category::Type category = (i == Air) ? Category::SceneAirLayer : Category::None;
+        Category::Type category = (i == LowerAir) ? Category::SceneAirLayer : Category::None;
         SceneNode::Ptr layer = std::make_unique<SceneNode>(category);
         mSceneLayers[i] = layer.get();
 
@@ -126,12 +127,20 @@ void World::buildScene()
 	finishSprite->setPosition(0.f, -76.f); // why -76.f ?
 	mSceneLayers[Background]->attachChild(std::move(finishSprite));
 
+    // Add particle node to the scene
+	std::unique_ptr<ParticleNode> smokeNode = std::make_unique<ParticleNode>(Particle::Smoke, mTextures);
+	mSceneLayers[LowerAir]->attachChild(std::move(smokeNode));
+
+	// Add propellant particle node to the scene
+ 	std::unique_ptr<ParticleNode> propellantNode = std::make_unique<ParticleNode>(Particle::Propellant, mTextures);
+	mSceneLayers[LowerAir]->attachChild(std::move(propellantNode));
+
     // player aircraft
     std::unique_ptr<Aircraft> leader = std::make_unique<Aircraft>(Aircraft::Eagle, mTextures, mFonts);
     mPlayerAircraft = leader.get();
     mPlayerAircraft->setPosition(mSpawnPosition);
     mPlayerAircraft->setVelocity(0.f, mScrollSpeed);
-    mSceneLayers[Air]->attachChild(std::move(leader));
+    mSceneLayers[HigherAir]->attachChild(std::move(leader));
 
     addEnemies();
 }
@@ -185,7 +194,7 @@ void World::spawnEnemies()
         std::unique_ptr<Aircraft> enemy = std::make_unique<Aircraft>(spawn.type, mTextures, mFonts);
         enemy->setPosition(spawn.x, spawn.y);
         enemy->setRotation(180.f);
-        mSceneLayers[Air]->attachChild(std::move(enemy));
+        mSceneLayers[HigherAir]->attachChild(std::move(enemy));
 
         mEnemySpawnPoints.pop_back();
     }
@@ -250,7 +259,7 @@ void World::handleCollisions()
 	{
 		if (matchesCategories(pair, Category::PlayerAircraft, Category::EnemyAircraft))
 		{
-            std::cout << "collision between PlayerAircraft and Enemy Aircraft" << std::endl;;
+            // std::cout << "collision between PlayerAircraft and Enemy Aircraft" << std::endl;
 			auto& player = static_cast<Aircraft&>(*pair.first);
 			auto& enemy = static_cast<Aircraft&>(*pair.second);
 
@@ -259,7 +268,7 @@ void World::handleCollisions()
 		}
 		else if (matchesCategories(pair, Category::PlayerAircraft, Category::Pickup))
 		{
-            std::cout << "collision between PlayerAircraft and Pickup" << std::endl;
+            // std::cout << "collision between PlayerAircraft and Pickup" << std::endl;
 			auto& player = static_cast<Aircraft&>(*pair.first);
 			auto& pickup = static_cast<Pickup&>(*pair.second);
 
@@ -270,7 +279,7 @@ void World::handleCollisions()
 		else if (matchesCategories(pair, Category::EnemyAircraft, Category::AlliedProjectile)
 			  || matchesCategories(pair, Category::PlayerAircraft, Category::EnemyProjectile))
 		{
-            std::cout << "collision between aircraft and projectile" << std::endl;
+            // std::cout << "collision between aircraft and projectile" << std::endl;
 			auto& aircraft = static_cast<Aircraft&>(*pair.first);
 			auto& projectile = static_cast<Projectile&>(*pair.second);
 

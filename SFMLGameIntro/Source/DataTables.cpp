@@ -2,6 +2,7 @@
 #include "Projectile.hpp"
 #include "Aircraft.hpp"
 #include "Pickup.hpp"
+#include "Particle.hpp"
 #include <functional>
 // why not std::array ?
 using namespace std::placeholders;
@@ -81,4 +82,17 @@ std::vector<PickupData> initializePickupData()
 	data[Pickup::FireRate].action = [] (Aircraft& a) { a.increaseFireRate(); };
 
 	return data;	
+}
+
+std::vector<ParticleData> initializeParticleData()
+{
+	std::vector<ParticleData> data(Particle::ParticleCount);
+
+	data[Particle::Propellant].color = sf::Color(255, 255, 50);
+	data[Particle::Propellant].lifetime = sf::seconds(0.6f);
+
+	data[Particle::Smoke].color = sf::Color(50, 50, 50);
+	data[Particle::Smoke].lifetime = sf::seconds(4.f);
+
+	return data;
 }

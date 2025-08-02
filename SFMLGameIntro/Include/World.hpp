@@ -47,7 +47,8 @@ class World : public sf::NonCopyable
         enum 
         {
             Background,
-            Air,
+            LowerAir,
+            HigherAir,
             LayerCount
         };
 

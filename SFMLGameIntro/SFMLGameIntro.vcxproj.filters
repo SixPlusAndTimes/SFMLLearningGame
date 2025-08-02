@@ -102,6 +102,15 @@
     <ClInclude Include="Include\Category.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Include\EmitterNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Particle.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\ParticleNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -180,6 +189,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Source\Pickup.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\EmitterNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\ParticleNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

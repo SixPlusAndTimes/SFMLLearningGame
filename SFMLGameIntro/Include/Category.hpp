@@ -13,6 +13,7 @@ namespace Category
 		Pickup				= 1 << 4, // 16
 		AlliedProjectile	= 1 << 5, // 32
 		EnemyProjectile		= 1 << 6, // 64
+		ParticleSystem		= 1 << 7, // 128
 
 		Aircraft = PlayerAircraft | AlliedAircraft | EnemyAircraft, // 14
 		Projectile = AlliedProjectile | EnemyProjectile, // 96

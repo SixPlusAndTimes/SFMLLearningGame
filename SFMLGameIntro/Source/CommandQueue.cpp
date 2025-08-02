@@ -11,6 +11,11 @@ void CommandQueue::push(const Command& command)
     mQueue.push(command);
 }
 
+void CommandQueue::push(Command&& Command)
+{
+    mQueue.push(std::move(Command));
+}
+
 Command CommandQueue::pop()
 {
     if (isEmpty())

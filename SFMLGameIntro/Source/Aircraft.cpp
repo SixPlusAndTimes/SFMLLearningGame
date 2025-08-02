@@ -107,7 +107,6 @@ void Aircraft::createBullets(SceneNode& node, const TextureHolder& textures) con
 void Aircraft::createProjectile(SceneNode& node, Projectile::Type type, float xOffset, float yOffset, const TextureHolder& textures) const
 {
 
-    std::cout << "createProjectile" << std::endl;
     std::unique_ptr<Projectile> projectile = std::make_unique<Projectile>(type, textures);
     sf::Vector2f offset(xOffset * mSprite.getGlobalBounds().width, yOffset * mSprite.getGlobalBounds().height);
     sf::Vector2f velocity(0.f, projectile->getMaxSpeed());
