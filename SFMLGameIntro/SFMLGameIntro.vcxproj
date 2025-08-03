@@ -138,6 +138,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\Aircraft.hpp" />
+    <ClInclude Include="Include\Animation.hpp" />
     <ClInclude Include="Include\Button.hpp" />
     <ClInclude Include="Include\Category.hpp" />
     <ClInclude Include="Include\Command.hpp" />
@@ -172,6 +173,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Aircraft.cpp" />
+    <ClCompile Include="Source\Animation.cpp" />
     <ClCompile Include="Source\Application.cpp" />
     <ClCompile Include="Source\Button.cpp" />
     <ClCompile Include="Source\Command.cpp" />

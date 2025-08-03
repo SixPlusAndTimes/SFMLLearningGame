@@ -28,8 +28,10 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures, const FontHolder& f
 , mIsLaunchingMissile(false)
 , mFireCommand()
 , mMissileCommand()
-, mIsMarkedForRemoval(false)
 , mDropPickupCommand()
+, mSpawnedPickup(false)
+, mShowExplosion(true)
+, mExplosion(textures.get(Textures::Explosion))
 {
 
     centerOrigin(mSprite);
@@ -61,6 +63,12 @@ Aircraft::Aircraft(Type type, const TextureHolder& textures, const FontHolder& f
     attachChild(std::move(healthDisplay));
 
     updateText();
+
+    // explosion effect
+    mExplosion.setFrameSize(sf::Vector2i(256, 256));
+	mExplosion.setNumFrames(16);
+	mExplosion.setDuration(sf::seconds(1));
+    centerOrigin(mExplosion);
 }
 
 void Aircraft::createPickup(SceneNode& node, const TextureHolder& textures) const
@@ -125,7 +133,14 @@ bool Aircraft::isAllied() const
 
 void Aircraft::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    target.draw(mSprite, states);
+	if (isDestroyed() && mShowExplosion)
+    {
+		target.draw(mExplosion, states);
+    }
+	else
+    {
+		target.draw(mSprite, states);
+    }
 }
 
 void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commandQueue)
@@ -133,8 +148,7 @@ void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commandQueue)
     if (isDestroyed())
 	{
 		checkPickupDrop(commandQueue);
-
-		mIsMarkedForRemoval = true;
+		mExplosion.update(dt);
 		return;
 	}
 
@@ -146,8 +160,11 @@ void Aircraft::updateCurrent(sf::Time dt, CommandQueue& commandQueue)
 
 void Aircraft::checkPickupDrop(CommandQueue& commands)
 {
-	if (!isAllied() && randomInt(3) == 0)
+	if (!isAllied() && randomInt(3) == 0 && !mSpawnedPickup)
+    {
 		commands.push(mDropPickupCommand);
+    }
+    mSpawnedPickup = true;
 }
 
 void Aircraft::checkProjectileLaunch(sf::Time dt, CommandQueue& commandQueue)
@@ -267,5 +284,5 @@ void Aircraft::collectMissiles(unsigned int count)
 
 bool Aircraft::isMarkedForRemoval() const
 {
-	return mIsMarkedForRemoval;
+	return isDestroyed() && (mExplosion.isFinished() || !mShowExplosion);
 }

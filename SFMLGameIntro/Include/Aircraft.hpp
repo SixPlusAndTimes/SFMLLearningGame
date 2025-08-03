@@ -2,6 +2,7 @@
 #define AIRCRAFT_H
 #include <Entity.hpp>
 #include <ResourceIdentifier.hpp>
+#include "Animation.hpp"
 #include "Projectile.hpp"
 class TextNode;
 class Aircraft : public Entity
@@ -42,8 +43,12 @@ class Aircraft : public Entity
         bool        mIsLaunchingMissile;
         Command     mFireCommand;
 		Command     mMissileCommand;
-        bool        mIsMarkedForRemoval;
         Command     mDropPickupCommand;
+        bool        mSpawnedPickup;
+
+        bool        mShowExplosion;
+        Animation   mExplosion;
+
     private:
         void            updateText();
         void            updateMoveMentPattern(sf::Time dt);

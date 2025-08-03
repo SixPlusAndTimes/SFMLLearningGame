@@ -5,6 +5,7 @@
 #include <source_location>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/System/Vector2.hpp>
+#include "Animation.hpp"
 namespace sf
 {
     class Sprite;
@@ -20,6 +21,7 @@ enum class LogLevel {
 
 void centerOrigin(sf::Sprite& sprite);
 void centerOrigin(sf::Text& text);
+void centerOrigin(Animation& animation);
 
 std::string toString(sf::Keyboard::Key key);
 
