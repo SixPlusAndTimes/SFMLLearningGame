@@ -3,11 +3,13 @@
 #include <array>
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <ResourceHolder.hpp>
-#include <ResourceIdentifier.hpp>
-#include <SceneNode.hpp>
-#include <Aircraft.hpp>
-#include <CommandQueue.hpp>
+
+#include "ResourceHolder.hpp"
+#include "ResourceIdentifier.hpp"
+#include "SceneNode.hpp"
+#include "Aircraft.hpp"
+#include "BloomEffect.hpp"
+#include "CommandQueue.hpp"
 
 class World : public sf::NonCopyable
 {
@@ -26,7 +28,7 @@ class World : public sf::NonCopyable
         };
         
     public:
-                                            explicit World(sf::RenderWindow& window, FontHolder& fonts);
+		explicit							World(sf::RenderTarget& outputTarget, FontHolder& fonts);
         void                                update(sf::Time dt);
         void                                draw();
         CommandQueue&                       getCommandQueue();
@@ -53,7 +55,9 @@ class World : public sf::NonCopyable
         };
 
     private:
-        sf::RenderWindow&                   mWindow;
+		sf::RenderTarget&					mTarget;
+        sf::RenderTexture					mSceneTexture;
+
         sf::View                            mWorldView;
         TextureHolder                       mTextures; 
         FontHolder&							mFonts;
@@ -66,5 +70,7 @@ class World : public sf::NonCopyable
         CommandQueue                        mCommandQueue;
         std::vector<SpawnPoint>             mEnemySpawnPoints;
         std::vector<Aircraft*>              mActivateEnemies;
+
+        BloomEffect							mBloomEffect;
 };
 #endif // WORLD_HBlendNone

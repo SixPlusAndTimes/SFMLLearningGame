@@ -5,9 +5,10 @@
 #include <iostream>
 #include <format>
 #include <cmath>
-World::World(sf::RenderWindow& window, FontHolder& fonts)
-: mWindow(window)
-, mWorldView(window.getDefaultView())
+World::World(sf::RenderTarget& outputTarget, FontHolder& fonts)
+: mTarget(outputTarget)
+, mSceneTexture()
+, mWorldView(outputTarget.getDefaultView())
 , mTextures()
 , mFonts(fonts)
 , mSceneGragh() // root node
@@ -18,6 +19,8 @@ World::World(sf::RenderWindow& window, FontHolder& fonts)
 , mPlayerAircraft(nullptr)
 , mCommandQueue()
 {
+	mSceneTexture.create(mTarget.getSize().x, mTarget.getSize().y);
+
 	loadTextures();
 	buildScene();
 
@@ -82,8 +85,18 @@ void World::update(sf::Time dt)
 
 void World::draw()
 {
-    mWindow.setView(mWorldView);
-    mWindow.draw(mSceneGragh);
+	if (PostEffect::isSupported())
+	{
+		mSceneTexture.clear();
+		mSceneTexture.setView(mWorldView);
+		mSceneTexture.draw(mSceneGragh);
+		mBloomEffect.apply(mSceneTexture, mTarget);
+	}
+	else 
+	{
+		mTarget.setView(mWorldView);
+		mTarget.draw(mSceneGragh);
+	}
 }
 
 
